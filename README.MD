@@ -8,13 +8,13 @@ A simple Flask-based "Hello World" web application is containerized using Docker
 
 ---
 
-## Objectives
+## Project Objectives
 
 * Develop a simple Python Flask web application.
 * Containerize the application using Docker.
-* Automate image building using GitHub Actions.
-* Publish container images to Docker Hub.
-* Demonstrate Continuous Integration and Continuous Deployment (CI/CD) concepts.
+* Automate Docker image building using GitHub Actions.
+* Push Docker images to Docker Hub automatically.
+* Demonstrate Continuous Integration and Continuous Deployment (CI/CD).
 
 ---
 
@@ -40,6 +40,11 @@ containerAssignment/
 ├── Dockerfile
 ├── README.md
 │
+├── images/
+│   ├── local_app_running.png
+│   ├── docker_hub_repo.png
+│   └── github_actions_success.png
+│
 └── .github/
     └── workflows/
         └── docker.yml
@@ -49,7 +54,7 @@ containerAssignment/
 
 ## Application Functionality
 
-The application exposes a single endpoint:
+The Flask application exposes a single endpoint:
 
 ```http
 GET /
@@ -71,13 +76,13 @@ Hello World from Docker!
 pip install -r requirements.txt
 ```
 
-### Run Application
+### Run the Application
 
 ```bash
 python app.py
 ```
 
-Access:
+Open:
 
 ```text
 http://localhost:5000
@@ -99,7 +104,7 @@ docker build -t hello-app .
 docker run -p 5000:5000 hello-app
 ```
 
-Open:
+Access the application:
 
 ```text
 http://localhost:5000
@@ -107,13 +112,13 @@ http://localhost:5000
 
 ---
 
-## GitHub Actions CI/CD Workflow
+## GitHub Actions Workflow
 
-This project uses GitHub Actions to automate the build and deployment process.
+This project uses GitHub Actions to automate the Docker image build and deployment process.
 
 ### Workflow Trigger
 
-The workflow executes automatically whenever code is pushed to the `main` branch.
+The workflow runs automatically whenever code is pushed to the `main` branch.
 
 ```yaml
 on:
@@ -126,9 +131,9 @@ on:
 
 1. Checkout repository source code.
 2. Configure Docker Buildx.
-3. Authenticate with Docker Hub.
+3. Authenticate with Docker Hub using GitHub Secrets.
 4. Build Docker image.
-5. Push image to Docker Hub.
+5. Push Docker image to Docker Hub.
 6. Report build status.
 
 ---
@@ -137,42 +142,64 @@ on:
 
 ```text
 Developer Pushes Code
-           │
-           ▼
-     GitHub Repository
-           │
-           ▼
-     GitHub Actions
-           │
-           ▼
-     Docker Image Build
-           │
-           ▼
-     Docker Hub Registry
+          │
+          ▼
+   GitHub Repository
+          │
+          ▼
+   GitHub Actions
+          │
+          ▼
+   Docker Image Build
+          │
+          ▼
+   Docker Hub Registry
 ```
 
 ---
 
-## Docker Hub Repository
+## Docker Hub Integration
 
-Container images are automatically published to Docker Hub.
+The workflow automatically publishes Docker images to Docker Hub using the following repository secrets:
 
-Example image:
+| Secret Name     | Purpose                 |
+| --------------- | ----------------------- |
+| DOCKER_USERNAME | Docker Hub Username     |
+| DOCKER_TOKEN    | Docker Hub Access Token |
 
-```text
+After a successful workflow run, the latest image is available from Docker Hub.
+
+Example:
+
+```bash
 docker pull <dockerhub-username>/<repository-name>:latest
 ```
 
 ---
 
-## GitHub Secrets Used
+## Screenshots
 
-The workflow uses repository secrets for secure authentication:
+### 1. Local Application Running
 
-| Secret Name     | Purpose                 |
-| --------------- | ----------------------- |
-| DOCKER_USERNAME | Docker Hub username     |
-| DOCKER_TOKEN    | Docker Hub access token |
+The Flask application running successfully in the browser.
+
+![Local Application Running](images/local_app_running.png)
+
+---
+
+### 2. Docker Hub Repository
+
+Docker image successfully pushed and stored in Docker Hub.
+
+![Docker Hub Repository](images/docker_hub_repo.png)
+
+---
+
+### 3. GitHub Actions Workflow Success
+
+GitHub Actions workflow successfully building and publishing the Docker image.
+
+![GitHub Actions Success](images/github_actions_success.png)
 
 ---
 
@@ -185,7 +212,7 @@ Through this project, the following concepts were implemented:
 * Container Image Management
 * Git Version Control
 * GitHub Repository Management
-* GitHub Actions
+* GitHub Actions Automation
 * Docker Hub Integration
 * Continuous Integration (CI)
 * Continuous Deployment (CD)
@@ -193,8 +220,21 @@ Through this project, the following concepts were implemented:
 
 ---
 
+## Assignment Deliverables
+
+* Flask Web Application
+* Dockerfile
+* Docker Container Image
+* GitHub Repository
+* GitHub Actions Workflow
+* Docker Hub Repository
+* Project Documentation (README)
+* Supporting Screenshots
+
+---
+
 ## Author
 
-Anoop Kumar
+**Anoop Kumar**
 
 Automated Container Build Pipeline Assignment
