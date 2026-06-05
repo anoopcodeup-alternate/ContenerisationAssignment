@@ -2,29 +2,31 @@
 
 ## Overview
 
-This project demonstrates the fundamentals of containerization and automated build workflows using Docker and GitHub Actions.
+This project demonstrates containerization and CI/CD automation using Docker, Docker Hub, GitHub, and GitHub Actions.
 
-The application is a simple Python Flask web application that displays a "Hello World" message. The application is containerized using Docker and integrated with GitHub Actions to automatically build the Docker image whenever code is pushed to the repository.
+A simple Flask-based "Hello World" web application is containerized using Docker. GitHub Actions automatically builds and publishes the Docker image to Docker Hub whenever code is pushed to the main branch.
 
 ---
 
-## Project Objectives
+## Objectives
 
-* Create a simple web application using Python Flask.
+* Develop a simple Python Flask web application.
 * Containerize the application using Docker.
-* Build and run the application inside a Docker container.
-* Automate the container build process using GitHub Actions.
-* Demonstrate Continuous Integration (CI) practices.
+* Automate image building using GitHub Actions.
+* Publish container images to Docker Hub.
+* Demonstrate Continuous Integration and Continuous Deployment (CI/CD) concepts.
 
 ---
 
-## Technology Stack
+## Technologies Used
 
 * Python 3
 * Flask
 * Docker
-* GitHub Actions
+* Docker Hub
 * GitHub
+* GitHub Actions
+* WSL2
 
 ---
 
@@ -45,9 +47,9 @@ containerAssignment/
 
 ---
 
-## Application
+## Application Functionality
 
-The Flask application exposes a single endpoint:
+The application exposes a single endpoint:
 
 ```http
 GET /
@@ -63,39 +65,19 @@ Hello World from Docker!
 
 ## Running the Application Locally
 
-### 1. Create a Virtual Environment
-
-```bash
-python -m venv venv
-```
-
-### 2. Activate the Virtual Environment
-
-Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Linux/macOS:
-
-```bash
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the Application
+### Run Application
 
 ```bash
 python app.py
 ```
 
-Open:
+Access:
 
 ```text
 http://localhost:5000
@@ -123,28 +105,15 @@ Open:
 http://localhost:5000
 ```
 
-The application will be served from within the Docker container.
-
 ---
 
-## GitHub Actions Workflow
+## GitHub Actions CI/CD Workflow
 
-The repository includes a GitHub Actions workflow that automatically executes whenever changes are pushed to the main branch.
+This project uses GitHub Actions to automate the build and deployment process.
 
-Workflow Tasks:
+### Workflow Trigger
 
-1. Checkout repository code.
-2. Set up Docker Buildx.
-3. Build the Docker image.
-4. Verify the build process.
-
-This demonstrates a basic Continuous Integration (CI) pipeline for containerized applications.
-
----
-
-## Workflow Trigger
-
-The workflow is triggered on:
+The workflow executes automatically whenever code is pushed to the `main` branch.
 
 ```yaml
 on:
@@ -153,20 +122,74 @@ on:
       - main
 ```
 
+### Workflow Steps
+
+1. Checkout repository source code.
+2. Configure Docker Buildx.
+3. Authenticate with Docker Hub.
+4. Build Docker image.
+5. Push image to Docker Hub.
+6. Report build status.
+
+---
+
+## CI/CD Pipeline
+
+```text
+Developer Pushes Code
+           │
+           ▼
+     GitHub Repository
+           │
+           ▼
+     GitHub Actions
+           │
+           ▼
+     Docker Image Build
+           │
+           ▼
+     Docker Hub Registry
+```
+
+---
+
+## Docker Hub Repository
+
+Container images are automatically published to Docker Hub.
+
+Example image:
+
+```text
+docker pull <dockerhub-username>/<repository-name>:latest
+```
+
+---
+
+## GitHub Secrets Used
+
+The workflow uses repository secrets for secure authentication:
+
+| Secret Name     | Purpose                 |
+| --------------- | ----------------------- |
+| DOCKER_USERNAME | Docker Hub username     |
+| DOCKER_TOKEN    | Docker Hub access token |
+
 ---
 
 ## Learning Outcomes
 
-Through this project, the following concepts were explored:
+Through this project, the following concepts were implemented:
 
-* Docker fundamentals
-* Container image creation
-* Dockerfile configuration
-* Flask application deployment
-* Git and GitHub workflow
+* Docker Containerization
+* Dockerfile Creation
+* Container Image Management
+* Git Version Control
+* GitHub Repository Management
+* GitHub Actions
+* Docker Hub Integration
 * Continuous Integration (CI)
-* GitHub Actions automation
-* WSL2-based Docker environment on Windows
+* Continuous Deployment (CD)
+* WSL2-based Development Environment
 
 ---
 
@@ -174,4 +197,4 @@ Through this project, the following concepts were explored:
 
 Anoop Kumar
 
-Containerization and DevOps Assignment
+Automated Container Build Pipeline Assignment
